@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Hello, World</title>
+    <style type="text/css">
+        html {
+            height: 100%
+        }
+
+        body {
+            height: 100%;
+            margin: 0px;
+            padding: 0px
+        }
+
+        #allmap {
+            height: 100%
+        }
+    </style>
+
+    <script type="text/javascript" src="map_load.js"></script>
+    <!--    <script language="JavaScript" src="./dict/bankLocation.js"></script>-->
+    <script language="JavaScript" src="utils/utils.js"></script>
+
+</head>
+
+<body>
+<div id="allmap"></div>
+<script type="text/javascript">
+  // var outputPath = 'tiles/'    //地图瓦片所在的文件夹
+  // var fromat = '.jpg'    //格式
+  //
+  // var tileLayer = new BMap.TileLayer();
+  //  tileLayer.getTilesUrl = function (tileCoord, zoom) {
+  //  var x = tileCoord.x;
+  //  var y = tileCoord.y;
+  //  var url = outputPath + zoom + '/' + x + '/' + y + fromat;
+  //  return url;
+  //  }
+  //  var tileMapType = new BMap.MapType('tileMapType', tileLayer);
+
+  const MapOptions = {
+    minZoom: 12,
+    maxZoom: 15,
+    mapType: BMAP_NORMAL_MAP,
+  }
+  // const transArr = qqMapToBMap('114.116414', '22.541189')
+  const map = new BMap.Map('allmap', MapOptions)
+  // const point = new BMap.Point(Number(transArr[0]), Number(transArr[1]))// 深圳
+  const point = new BMap.Point(116.404, 39.915)// 北京
+  map.centerAndZoom(point, 14)
+  map.enableScrollWheelZoom(true)
+  // 事件
+  map.addEventListener('zoomstart', function () {
+    console.log('当前缩放级别：', map.getZoom())
+  })
+  map.addEventListener('zoomend', function () {
+    console.log('当前缩放级别：', map.getZoom())
+  })
+
+  // 图标
+  const icon = new BMap.Icon('./images/boc-location.png',
+    new BMap.Size(25, 25), {
+      offset: new BMap.Size(0, 0), // 指定定位位置
+      imageOffset: new BMap.Size(0, 0), // 设置图片偏移
+    },
+  )
+  icon.setImageSize(new BMap.Size(25, 25))
+  const marker = new BMap.Marker(point, { icon: icon })
+  map.addOverlay(marker)
+
+</script>
+</body>
+
+</html>
